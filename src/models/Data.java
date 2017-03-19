@@ -7,12 +7,12 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class Data {
     private String person;
-    private char sex;
+    private String sex;
     private int dob;
     private String mammy;
     private String daddy;
 
-    public Data(String person, char sex, int dob, String mammy, String Daddy){
+    public Data(String person, String sex, int dob, String mammy, String Daddy){
         this.person = person;
         this.sex = sex;
         this.dob = dob;
@@ -21,7 +21,7 @@ public class Data {
     }
 
     public String toString(){
-        return toStringHelper(this).addValue("\nName: " + person)
+        return toStringHelper(this).addValue("\n\nName: " + person)
                 .addValue("\nSex: " + sex)
                 .addValue("\nDOB: " + dob)
                 .addValue("\nMother: " + mammy)
@@ -38,13 +38,13 @@ public class Data {
     }
 
     public String getSex(){
-        if(sex=='M'){
+        if(sex=="M"){
             return "Male";
         }else
         return "Female";
     }
 
-    public void setSex(char sex){
+    public void setSex(String sex){
         this.sex = sex;
     }
 
