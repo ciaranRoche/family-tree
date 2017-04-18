@@ -42,11 +42,39 @@ public class FamilyTreeAPI {
                 Person person = new Person(name, sex, dob);
                 familyTree.put(name, person);
             }else{
-                throw new Exception("Invalid lenght " + dataTokens.length);
+                throw new Exception("Invalid length " + dataTokens.length);
             }
         }
         //second traversal to populate parents
-        //todo
+        In data = new In(dataFile);
+        String delim = " ";
+        while(!data.isEmpty()){
+            String dataDets = data.readLine();
+            dataDets = dataDets.trim();
+            String[] tokens = dataDets.split(delim);
+            if(tokens.length==5){
+                String personName = tokens[0];
+                String mammyTemp = tokens[3];
+                if(mammyTemp=="?"){
+                    mammyTemp=null;
+                }
+                String daddyTemp = tokens[4];
+                if(daddyTemp=="?"){
+                    daddyTemp=null;
+                }
+                if(familyTree.get(mammyTemp)!=null){
+                    Person mammy = familyTree.get(mammyTemp);
+                    familyTree.get(tokens[0]).setMammy(mammy);
+                }
+                if(familyTree.get(daddyTemp)!=null){
+                    Person daddy = familyTree.get(daddyTemp);
+                    familyTree.get(tokens[0]).setDaddy(daddy);
+                }
+            }else{
+                throw new Exception("Invalid length " + tokens.length);
+            }
+
+        }
     }
 
     /*
@@ -60,6 +88,20 @@ public class FamilyTreeAPI {
     Add siblings to person
      */
     public static void addSiblings(){
+        //todo
+    }
+
+    /*
+    Add new person to familytree
+     */
+    public static void addPerson(){
+        //todo
+    }
+
+    /*
+    Update person in familytree
+     */
+    public static void updatePerson(){
         //todo
     }
 }
