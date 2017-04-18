@@ -4,9 +4,7 @@ import edu.princeton.cs.introcs.In;
 import models.Person;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,8 +21,10 @@ public class FamilyTreeAPI {
         System.out.println(familyTree.toString());
     }
 
+
     public static void prime()throws Exception{
 
+        //first traversal to populate map with type person
         File dataFile = new File("././data/dataSet");
         In dataIn = new In(dataFile);
 
@@ -45,6 +45,22 @@ public class FamilyTreeAPI {
                 throw new Exception("Invalid lenght " + dataTokens.length);
             }
         }
+        //second traversal to populate parents
+        //todo
+    }
+
+    /*
+    Add children to person
+     */
+    public static void addKids(){
+        //todo
+    }
+
+    /*
+    Add siblings to person
+     */
+    public static void addSiblings(){
+        //todo
     }
 }
 
