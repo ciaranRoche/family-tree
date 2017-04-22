@@ -4,6 +4,7 @@ import asg.cliche.Command;
 import asg.cliche.ShellFactory;
 import asg.cliche.Shell;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -45,7 +46,7 @@ public class FamilyTreeClient {
     }
 
     @Command(description = "Add a Person")
-    public void addPerson(){
+    public void addPerson() throws FileNotFoundException {
         api.addPerson();
     }
 

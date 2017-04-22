@@ -3,7 +3,7 @@ package controllers;
 import edu.princeton.cs.introcs.In;
 import models.Person;
 
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -31,7 +31,7 @@ public class FamilyTreeAPI {
         //findMammy("Armani");
         //findMammy("Colby");
         //System.out.println(familyTree.toString());
-        //addPerson();
+        addPerson();
         //addKids();
         //System.out.println(familyTree.get("test"));
         //findMammy("test");
@@ -223,7 +223,7 @@ public class FamilyTreeAPI {
     /*
     Add new person to familytree
      */
-    public static void addPerson(){
+    public static void addPerson() throws FileNotFoundException {
         System.out.println("Please enter the details of person to be added:");
         System.out.println("Name:");
         String name = scanner.nextLine();
@@ -238,14 +238,17 @@ public class FamilyTreeAPI {
 
         Person mammy = null;
         Person daddy = null;
-
+        boolean newMammy = false;
+        boolean newDaddy = false;
 
         if(!familyTree.containsKey(mammyName)){
             familyTree.put(mammyName, new Person(mammyName));
+            newMammy = true;
         }
 
         if(!familyTree.containsKey(daddyName)){
             familyTree.put(daddyName, new Person(daddyName));
+            newDaddy = true;
         }
 
         mammy = familyTree.get(mammyName);
@@ -255,7 +258,23 @@ public class FamilyTreeAPI {
         Person person = new Person(name, sex, dob, mammy, daddy);
         familyTree.put(name, person);
         addKids();
+
+        final OutputStream os = new FileOutputStream("././dataSet");
+        final PrintStream ps = new PrintStream(os);
+        ps.print(name + " " + sex + " " + dob + " " + mammyName + " " + daddyName);
+        if(newMammy==true){
+            ps.print(mammyName + " ? ? ? ?");
+        }
+        if(newDaddy==true){
+            ps.print(daddyName + " ? ? ? ?");
+        }
+
+        ps.close();
+
+        System.out.println("\nNew Person(s) file has been updated!");
     }
+
+
 
     /*
     Update person in familytree
