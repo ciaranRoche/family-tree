@@ -28,7 +28,7 @@ public class FamilyTreeClient {
         Shell shell = ShellFactory.createConsoleShell("Family",
                 "      <<<<------------------------------------------------->>>>\n             " +
                         "        Welcome to the Family Tree\n      <<<<------------------------------------------------->>>>" +
-                        "\n- ?help for instructions\n- ?list for commands",client);
+                            "\n- ?help for instructions\n- ?list for commands",client);
         shell.commandLoop();
     }
 
@@ -46,7 +46,7 @@ public class FamilyTreeClient {
     }
 
     @Command(description = "Add a Person")
-    public void addPerson() throws FileNotFoundException {
+    public void addPerson() throws IOException {
         api.addPerson();
     }
 

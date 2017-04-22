@@ -31,15 +31,15 @@ public class FamilyTreeAPI {
         //findMammy("Armani");
         //findMammy("Colby");
         //System.out.println(familyTree.toString());
-        addPerson();
+        //addPerson();
         //addKids();
         //System.out.println(familyTree.get("test"));
         //findMammy("test");
         //findDaddy("test");
         //findKids("mammy");
+        System.out.println(hashPP(familyTree));
 
     }
-
 
     public static void prime()throws Exception{
 
@@ -149,51 +149,6 @@ public class FamilyTreeAPI {
         }
     }
 
-//    /*
-//    Add siblings to person
-//     */
-//    public static void addSiblings(){
-//        Iterator<String> it = familyTree.keySet().iterator();
-//        while (it.hasNext()) {
-//            String key = it.next();
-//            Person value = familyTree.get(key);
-//            Person mammy = value.getMammy();
-//            Person daddy = value.getDaddy();
-//            if(mammy!=null){
-//                Iterator<String> mammySibs = familyTree.keySet().iterator();
-//                while (mammySibs.hasNext()){
-//                    String person = mammySibs.next();
-//                    Person persons = familyTree.get(person);
-//                    if(!persons.equals(value)){
-//                        Person sibling = familyTree.get(person);
-//                        Person daMammy = sibling.getMammy();
-//                        if(daMammy!=null){
-//                            if(daMammy.equals(mammy)){
-//                                value.setSiblings(sibling);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            if(daddy!=null){
-//                Iterator<String> daddySibs = familyTree.keySet().iterator();
-//                while(daddySibs.hasNext()){
-//                    String person = daddySibs.next();
-//                    Person persons = familyTree.get(person);
-//                    if(!persons.equals(value)){
-//                        Person sibling = familyTree.get(person);
-//                        Person daDaddy = sibling.getDaddy();
-//                        if(daDaddy!=null){
-//                            if(daDaddy.equals(daddy)){
-//                                value.setSiblings(sibling);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public static void findSiblings(String p){
         Person person = familyTree.get(p);
 
@@ -219,11 +174,10 @@ public class FamilyTreeAPI {
         }
     }
 
-
     /*
     Add new person to familytree
      */
-    public static void addPerson() throws FileNotFoundException {
+    public static void addPerson() throws IOException {
         System.out.println("Please enter the details of person to be added:");
         System.out.println("Name:");
         String name = scanner.nextLine();
@@ -259,22 +213,22 @@ public class FamilyTreeAPI {
         familyTree.put(name, person);
         addKids();
 
-        final OutputStream os = new FileOutputStream("././dataSet");
-        final PrintStream ps = new PrintStream(os);
-        ps.print(name + " " + sex + " " + dob + " " + mammyName + " " + daddyName);
+        File file = new File("././data/dataSet");
+        FileWriter write = new FileWriter(file, true);
+
+        write.write("\n" + name + " " + sex + " " + dob + " " + mammyName + " " + daddyName);
         if(newMammy==true){
-            ps.print(mammyName + " ? ? ? ?");
+            write.write("\n" + mammyName + " ? ? ? ?");
         }
         if(newDaddy==true){
-            ps.print(daddyName + " ? ? ? ?");
+            write.write("\n" + daddyName + " ? ? ? ?");
         }
 
-        ps.close();
+        write.flush();
+        write.close();
 
         System.out.println("\nNew Person(s) file has been updated!");
     }
-
-
 
     /*
     Update person in familytree
@@ -296,25 +250,26 @@ public class FamilyTreeAPI {
         }
     }
 
-//    public static void listSibs(){
-//        Iterator<String> iterator = familyTree.keySet().iterator();
-//        while(iterator.hasNext()){
-//            String key = iterator.next();
-//            Person value = familyTree.get(key);
-//            System.out.println("Siblings of " + value.getPerson() + " are " + value.getSiblings().toString());
-//
-//        }
-//    }
-//
-//    public static void listKids(){
-//        Iterator<String> iterator = familyTree.keySet().iterator();
-//
-//        while(iterator.hasNext()){
-//            String key = iterator.next();
-//            Person value = familyTree.get(key);
-//
-//            System.out.println("Kids of " + value.getPerson() + " are " + value.getChildren().toString());
-//        }
-//    }
+    @SuppressWarnings("unchecked")
+    private static String hashPP(final Map<String,Person> m, String... offset) {
+        String retval = "";
+        String delta = offset.length == 0 ? "" : offset[0];
+        for( Map.Entry<String, Person> e : m.entrySet() ) {
+            retval += delta + "["+e.getKey() + "] -> ";
+            Object value = e.getValue();
+            if( value instanceof Map ) {
+                retval += "(Hash)\n" + hashPP((Map<String,Person>)value, delta + "  ");
+            } else if( value instanceof List ) {
+                retval += "{";
+                for( Object element : (List)value ) {
+                    retval += element+", ";
+                }
+                retval += "}\n";
+            } else {
+                retval += "["+value.toString()+"]\n";
+            }
+        }
+        return retval+"\n";
+    }
 }
 
