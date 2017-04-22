@@ -11,11 +11,15 @@ public class Person {
     private String person;
     private String sex;
     private int dob;
-    private Person partner;
     private Person mammy;
     private Person daddy;
-    private HashSet<Person>children = new HashSet<>();
-    private HashSet<Person>siblings = new HashSet<>();
+    //made public as needed specific attributes from set
+    public HashSet<Person>children = new HashSet<>();
+    public HashSet<Person>siblings = new HashSet<>();
+
+    public Person(){
+
+    }
 
     public Person(String person){
         this.person = person;
@@ -26,7 +30,6 @@ public class Person {
         this.person = person;
         this.sex = sex;
         this.dob = dob;
-
     }
 
     public Person(String person, String sex, int dob, Person mammy, Person daddy){
@@ -38,7 +41,8 @@ public class Person {
     }
 
     public String toString(){
-        return toStringHelper(this).addValue("Name: " + person)
+        return toStringHelper(getClass())
+                .addValue("Name: " + person)
                 .addValue("Sex: " + sex)
                 .addValue("DOB: " + dob)
                 .addValue("Mother: " + mammy)
@@ -100,29 +104,19 @@ public class Person {
         this.daddy = daddy;
     }
 
-    public Person getPartner() {
-        return partner;
-    }
-
-    public void setPartner(Person partner){
-        this.person = person;
-    }
-
     public HashSet<Person> getChildren() {
         		return children;
     }
 
-    public void setChildren(HashSet<Person> children) {
-        this.children = children;
+    public void setChildren(Person person) {
+        children.add(person);
     }
 
     public HashSet<Person> getSiblings() {
         return siblings;
     }
 
-    public void setSiblings(HashSet<Person> siblings) {
-        this.siblings = siblings;
+    public void setSiblings(Person person) {
+        siblings.add(person);
     }
-
-
 }
