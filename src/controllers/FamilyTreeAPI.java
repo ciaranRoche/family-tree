@@ -37,7 +37,6 @@ public class FamilyTreeAPI {
         //findMammy("test");
         //findDaddy("test");
         //findKids("mammy");
-        System.out.println(hashPP(familyTree));
 
     }
 
@@ -248,28 +247,6 @@ public class FamilyTreeAPI {
 
             System.out.println(value);
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    private static String hashPP(final Map<String,Person> m, String... offset) {
-        String retval = "";
-        String delta = offset.length == 0 ? "" : offset[0];
-        for( Map.Entry<String, Person> e : m.entrySet() ) {
-            retval += delta + "["+e.getKey() + "] -> ";
-            Object value = e.getValue();
-            if( value instanceof Map ) {
-                retval += "(Hash)\n" + hashPP((Map<String,Person>)value, delta + "  ");
-            } else if( value instanceof List ) {
-                retval += "{";
-                for( Object element : (List)value ) {
-                    retval += element+", ";
-                }
-                retval += "}\n";
-            } else {
-                retval += "["+value.toString()+"]\n";
-            }
-        }
-        return retval+"\n";
     }
 }
 
